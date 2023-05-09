@@ -1,7 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { AppRouter } from './router/AppRouter';
+
+
 
 export const ChatApp = () => {
   return (
-    <div>ChatApp</div>
+    
+    <RouterProvider router={AppRouter} />
   )
 }
