@@ -1,5 +1,5 @@
 import React, { createContext, useState, useCallback } from 'react';
-import { fetchWithoutToken } from '../helpers/fetch';
+import { fetchWithoutToken, fetchWithToken } from '../helpers/fetch';
 
 export const AuthContext = createContext();
 
@@ -32,7 +32,6 @@ export const AuthProvider = ({children}) => {
                 email: user.email
 
             });
-            console.log("Autenticado!!!");
         }
 
         return resp.ok;       
@@ -42,6 +41,7 @@ export const AuthProvider = ({children}) => {
     const register = async ( name, email, password ) => {
         
         const resp = await fetchWithoutToken('login/new', {name,email,password}, 'POST');
+        
         if( resp.ok ){
             localStorage.setItem('token', resp.token);
             const { user } = resp;
@@ -52,16 +52,58 @@ export const AuthProvider = ({children}) => {
                 name:user.name,
                 email: user.email
             });
-            console.log ("User created and Logged!!");
 
         }
         return resp.ok;
     }
 
     // Esta es especial pq va a estar en un UseEffect
-    const checkToken = useCallback(() => {}, [] )
+    //Esta hecha on un UseCallback pq la quieremos colocar dentro de un Efecto, al hacerlo de esta manera se memoriza 
+    // y no se va a volver a reconstruir, no se va a volver a disparar ese efecto constantemente
+
+    const checkToken = useCallback(async () => {
+        const token = localStorage.getItem('token');
+            if(!token) {
+                 setAuth({
+                    uid: null,
+                    checking: false,
+                    logged: false,
+                    name: null,
+                    email: null
+    
+                });
+                return false;
+            }
+
+            const resp= await fetchWithToken('login/renew');
+
+            if (resp.ok){
+                localStorage.setItem('token', resp.token);
+                const { user } = resp;
+                setAuth({
+                    uid: user.uid,
+                    checking: false,
+                    logged: true, 
+                    name:user.name,
+                    email: user.email
+                });
+                return true;
+            }else{
+                setAuth({              
+                    checking: false,
+                    logged: false,             
+                });
+                return false;
+            }
+                
+    }, [] );
 
     const logout = () => {
+        localStorage.removeItem('token');
+        setAuth({              
+            checking: false,
+            logged: false,             
+        });
 
     }
     

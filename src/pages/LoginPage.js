@@ -54,6 +54,7 @@ export const LoginPage = () => {
 		: localStorage.removeItem('email', form.email);
 		
 		const { email, password} = form;
+		
 		const ok =  await login ( email, password );
 
 		if (!ok) {
@@ -73,7 +74,7 @@ export const LoginPage = () => {
 				<form className="login100-form validate-form flex-sb flex-w"
 					onSubmit={ onSubmit }>
 					<span className="login100-form-title mb-3">
-						Chat - Ingreso
+						Chat - Login
 					</span>
 					
 					<div className="wrap-input100 validate-input mb-3">

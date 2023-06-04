@@ -27,10 +27,10 @@ export const RegisterPage = () => {
 		ev.preventDefault();
 		const { name, email, password } = form;
 		const ok = await register ( name, email, password);
-
-		if ( !ok ) {
-			Swal('Error', 'There has been an error on register', 'error');
-		}
+		
+		 if ( !ok ) {
+		 	Swal('Error', 'There has been an error on register', 'error');
+		 }
 	}
 
 	const everithingOK = () => {
