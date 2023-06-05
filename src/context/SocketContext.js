@@ -40,6 +40,19 @@ export const SocketProvider = ({ children }) => {
         })
     
     }, [socket, dispatch])
+
+    useEffect(() => {
+        socket?.on('personal-message', (message) => {
+            console.log(message);
+            dispatch({
+                type: types.NewMessage,
+                payload: message
+            })
+            //TODO Dispach
+            //TODO: mover el scroll al final
+        })
+    }, [socket, dispatch])
+    
     
     
 
