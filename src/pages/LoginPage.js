@@ -1,14 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import '../css/login-register.css';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../auth/AuthContext';
+//import { AuthContext } from '../auth/AuthContext';
+import { useDispatch } from 'react-redux';
+import { login } from '../features/authSlice';
+
 
 
 
 export const LoginPage = () => {
+	const dispatch = useDispatch();
 
-	const { login } = useContext(AuthContext);
+	
 
 	const [form, setForm] = useState({
 		email: 'test1@test.com',
@@ -55,7 +59,7 @@ export const LoginPage = () => {
 		
 		const { email, password} = form;
 		
-		const ok =  await login ( email, password );
+		const ok =  await dispatch(login ( email, password ));
 
 		if (!ok) {
 			Swal.fire('Error', 'Chek user and password', 'error');
