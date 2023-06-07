@@ -29,16 +29,6 @@ export const SendMessage = () => {
             message
         })
 
-        // dispatch({
-        //     type: types.NewMessage, 
-        //     payload: message
-        // })
-
-        
-
-
-        //TODO: hacer el dispatch del mensaje....
-
     }
 
   return (
