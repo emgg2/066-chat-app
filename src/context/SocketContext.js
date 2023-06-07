@@ -6,6 +6,7 @@ import { ChatContext } from './chat/ChatContext';
 import { useSocket } from '../hooks/useSocket'
 
 import { types } from '../types/types';
+import { scrollToBottomAnimated } from '../helpers/scrolltoBottom';
 
 
 export const SocketContext = createContext();
@@ -43,13 +44,14 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         socket?.on('personal-message', (message) => {
-            console.log(message);
             dispatch({
                 type: types.NewMessage,
                 payload: message
             })
-            //TODO Dispach
-            //TODO: mover el scroll al final
+            setTimeout(() => {
+                scrollToBottomAnimated('mensajes');
+            }, 0)
+            
         })
     }, [socket, dispatch])
     

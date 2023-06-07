@@ -29,14 +29,13 @@ export const SendMessage = () => {
             message
         })
 
+        // dispatch({
+        //     type: types.NewMessage, 
+        //     payload: message
+        // })
 
+        
 
-        //TODO emit evento socket para enviar el mensaje
-        // {
-        //    from:
-        //    to:
-        //    message:
-        //}
 
         //TODO: hacer el dispatch del mensaje....
 

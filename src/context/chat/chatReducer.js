@@ -22,6 +22,14 @@ export const chatReducer = (state, action) => {
     
     switch ( action.type ) {
 
+        case types.ResetState:
+            return {
+                uid: '',
+                activeChat: null,
+                users: [],
+                messages: []
+            }            
+
         case types.LoadedUsers:
             return {
                 ...state,
@@ -50,7 +58,13 @@ export const chatReducer = (state, action) => {
                     ...state
                 }
             }
-            
+        case types.LoadMessages:
+            return {
+                ...state,
+                messages: [ ...action.payload ]
+            }
+        
+       
 
         default: 
             return state;
