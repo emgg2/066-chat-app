@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { SidebarChatItem } from './SidebarChatItem'
-import { AuthContext } from '../auth/AuthContext';
-import { ChatContext } from '../context/chat/ChatContext'
+import { useSelector } from 'react-redux';
 
 export const Sidebar = () => {
+  const auth = useSelector( state => state.auth );
+  const chatState = useSelector ( state => state.chat );
 
-  const { chatState } = useContext(ChatContext);
-  const { auth } = useContext(AuthContext);
+
 
   const { uid } = auth;
    

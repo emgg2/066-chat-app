@@ -11,7 +11,7 @@ export const authSlice = createSlice({
         email: null        
     },
     reducers: {
-        initStateAuth: state => {
+        initStateAuth (state) {
             state.uid = null
             state.checking = false
             state.logged = false 
@@ -19,17 +19,15 @@ export const authSlice = createSlice({
             state.email = null       
             
         } , 
-        setAuth: (state, action) => {
-            state.uid = action.uid
+        setAuth (state, action) {
+            state.uid = action.payload.uid
             state.checking = false
             state.logged = true
-            state.name = action.name
-            state.email = action.email
+            state.name = action.payload.name
+            state.email = action.payload.email
 
         },
-     
-
-     
+      
 
     }
 })
@@ -41,8 +39,11 @@ export const login = ( email, password) => async (dispatch) => {
     if( resp.ok ) {
         localStorage.setItem('token', resp.token );
         const { user } = resp;
-        dispatch(setAuth( user ));
+        dispatch(setAuth( user ));          
+             
     }
+    return resp.ok;
+  
 
 }
 

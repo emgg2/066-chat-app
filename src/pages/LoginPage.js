@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import '../css/login-register.css';
 import { Link } from 'react-router-dom';
-//import { AuthContext } from '../auth/AuthContext';
 import { useDispatch } from 'react-redux';
 import { login } from '../features/authSlice';
 
@@ -51,15 +50,14 @@ export const LoginPage = () => {
 		})
 	}
 
-	const onSubmit = async  (ev) => {
+	const onSubmit = async (ev) => {
 	  ev.preventDefault();
 	  (form.rememberme)
 		? localStorage.setItem('email', form.email)
 		: localStorage.removeItem('email', form.email);
 		
 		const { email, password} = form;
-		
-		const ok =  await dispatch(login ( email, password ));
+		const ok = await dispatch(login ( email, password ));
 
 		if (!ok) {
 			Swal.fire('Error', 'Chek user and password', 'error');

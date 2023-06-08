@@ -1,14 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { SendMessage } from './SendMessage'
 import { IncomingMessage } from './IncomingMessage'
 import { OutgoingMessage } from './OutgoingMessage'
-import { ChatContext } from '../context/chat/ChatContext'
-import { AuthContext } from '../auth/AuthContext'
+import { useSelector } from 'react-redux';
 
 export const Messages = () => {
+    const auth = useSelector( state => state.auth );
+    const chatState = useSelector ( state => state.chat);
 
-    const { chatState } = useContext( ChatContext );
-    const { auth } = useContext( AuthContext );
+
 
   return (
      <div className="mesgs">

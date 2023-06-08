@@ -9,12 +9,34 @@ export const chatSlice = createSlice({
         messages:[]
     },
     reducers: {
-      inicio: state=>{}
+        activateChat: (state, action) => {
+          if( state.activeChat !== action.payload)
+          {
+            state.activeChat = action.payload
+          }
+
+        },
+        loadMessagesChat: (state, action) => {
+          state.messages = action.payload
+        },
+        loadedUsersChat: (state, action) => {
+          state.users = action.payload  
+        },
+        newMessageChat: (state, action) => {
+          if( state.activeChat === action.payload.from ||
+              state.activeChat === action.payload.to 
+          ){
+              state.messages.push(action.payload);
+          }
+        }
+
      
 
     }
 })
 
-export const {inicio} = chatSlice.actions
+
+
+export const { activateChat, loadMessagesChat, loadedUsersChat, newMessageChat } = chatSlice.actions
 
 export default chatSlice.reducer
