@@ -2,10 +2,11 @@ import React from 'react'
 import { hourMonth } from '../helpers/hourMonth'
 
 export const IncomingMessage = ({ msg }) => {
-
     
   return (
-     <div className="incoming_msg">
+     <div 
+        className="incoming_msg"  
+    >
      <div className="incoming_msg_img">
          <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" />
      </div>
