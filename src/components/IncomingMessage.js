@@ -1,21 +1,73 @@
-import React from 'react'
+import React  from 'react'
 import { hourMonth } from '../helpers/hourMonth'
+import { BiChevronsDown } from "react-icons/bi"
+import { ContextMenu } from './styles/styles'
+import useContextMenu from '../hooks/useContextMenu'
 
-export const IncomingMessage = ({ msg }) => {
-    
+
+
+export const IncomingMessage = ({key, msg }) => {
+    const { clicked, setClicked, points, setPoints } = useContextMenu(); 
+
+
+   const removeMessage = () => {
+        console.log("remove message")
+
+   }
+
+   const removeAllMessages =  () => {
+    console.log("remove all messages")
+}
+
+   
   return (
      <div 
         className="incoming_msg"  
+        onContextMenu={ ( e ) => {
+            e.preventDefault();
+            setClicked(true);
+            setPoints({
+              x: e.pageX,
+              y: e.pageY
+            });
+  
+          }}
+
     >
      <div className="incoming_msg_img">
          <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" />
      </div>
      <div className="received_msg">
          <div className="received_withd_msg">
-             <p>{ msg.message }</p>
+             <p>
+                { msg.message }
+                <BiChevronsDown 
+                    className='contextMenu-icon'
+                />
+             </p>
              <span className="time_date"> { hourMonth( msg.createdAt ) }</span>
+             
          </div>
      </div>
+     {
+          clicked && (
+            <ContextMenu top={points.y} left={ points.x }>
+              <ul>
+                <li 
+                    onClick={removeMessage} 
+                >
+                    Remove
+                </li> 
+                <li
+                    onClick={removeAllMessages}
+                >
+                    Remove all messages
+                </li>               
+              </ul>
+            </ContextMenu>
+          )
+        } 
  </div>
+ 
   )
 }

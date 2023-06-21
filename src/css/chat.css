@@ -234,3 +234,7 @@ textarea {
     width: 60%;
     text-align: center;
 }
+
+.contextMenu-icon {
+    float: right;
+}

@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 
 export const useSocket = ( serverPath ) => {
     
-    const [socket, setSocket] = useState(null);
+    const [ socket, setSocket ] = useState(null);
     const [ online, setOnline ] = useState(false);
 
     const connectSocket = useCallback(()=>{
@@ -21,8 +21,7 @@ export const useSocket = ( serverPath ) => {
 
         } );        
         
-        setSocket( socketTemp );
-       
+        setSocket( socketTemp );       
 
     }, [serverPath])
 
