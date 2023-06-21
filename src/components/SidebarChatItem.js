@@ -1,25 +1,23 @@
-import React, { useContext } from 'react'
-import { ChatContext } from '../context/chat/ChatContext';
-import { types } from '../types/types';
+import React from 'react'
 import { scrollToBottom } from '../helpers/scrolltoBottom';
 import { fetchWithToken } from '../helpers/fetch';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadMessagesChat, activateChat } from '../features/chatSlice';
 
 
 export const SidebarChatItem = ({ user }) => {
 
-    const { chatState,  dispatch } = useContext( ChatContext);
+    const chatState = useSelector( state => state.chat );
+    const dispatch = useDispatch();
+
     const { activeChat } = chatState;    
 
     const onClick = async () => {
-        dispatch({            
-            type: types.ActivateChat,
-            payload: user.uid
-        });
+
+        dispatch(activateChat(user.uid));            
         const resp = await fetchWithToken(`messages/${ user.uid }`);  
-        dispatch({
-            type: types.LoadMessages, 
-            payload: resp.messages
-        })
+
+        dispatch(loadMessagesChat(resp.messages));
         setTimeout(() => {
 			scrollToBottom('mensajes')
 		}, 0);

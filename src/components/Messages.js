@@ -1,19 +1,12 @@
-import React, { useContext} from 'react'
+import React from 'react'
 import { SendMessage } from './SendMessage'
 import { IncomingMessage } from './IncomingMessage'
 import { OutgoingMessage } from './OutgoingMessage'
-import { ChatContext } from '../context/chat/ChatContext'
-import { AuthContext } from '../auth/AuthContext'
-
+import { useSelector } from 'react-redux';
 
 export const Messages = () => {
-
-    const { chatState } = useContext( ChatContext );
-    const { auth } = useContext( AuthContext );
-  
-    console.log(chatState.messages);
-   
-    
+    const auth = useSelector( state => state.auth );
+    const chatState = useSelector ( state => state.chat);
 
   return (
      <div className="mesgs">
@@ -21,11 +14,10 @@ export const Messages = () => {
      {/* Historia inicio */}
      <div 
         id="mensajes" 
-        className="msg_history"     
+        className="msg_history"
       >
         {
-            chatState.messages.map( msg => (     
-                    
+            chatState.messages.map( msg => (           
                 ( auth.uid === msg.to)
                      ? <IncomingMessage key={ msg._id } msg={ msg } />
                      : <OutgoingMessage key={ msg._id } msg={ msg } />
@@ -33,7 +25,6 @@ export const Messages = () => {
             ))
         }
 
-     
 
      </div>
      {/* Historia Fin */}

@@ -1,52 +1,27 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {  BrowserRouter, Route, Routes } from 'react-router-dom';
-//import {  RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import { ChatPage } from '../pages/ChatPage';
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
-import { AuthContext } from '../auth/AuthContext';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
-//import ErrorPage from '../pages/ErrorPage';
-
-// let router =  createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <ChatPage />,
-//     errorElement: <ErrorPage />
-//   },
-//   {
-//     path: "/auth/login",
-//     element: <LoginPage />,  
-//     errorElement: <ErrorPage />
-//   },
-//   {
-//     path: '/auth/register',
-//     element:  <RegisterPage />,
-//     errorElement: <ErrorPage />
-//   },
-//   {
-//     path:'*',
-//     element: <ChatPage />
-//   }
+import { useSelector, useDispatch } from 'react-redux';
+import { checkToken } from '../features/authSlice';
 
 
-// ]);
 
 
-// export function AppRouter(){
-//   return ( 
-//     <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
-//   )
-// }
 export const AppRouter = () => {
 
-  const { auth, checkToken } = useContext(AuthContext); 
+ const auth = useSelector( state => state.auth );
+ const dispatch = useDispatch();
+  
+  
 
   useEffect(() => {
-   checkToken();
-  }, [checkToken])
+    dispatch(checkToken());
+  }, [dispatch])
   
 
 

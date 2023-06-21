@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../auth/AuthContext';
+import React  from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout  } from '../features/authSlice';
 
 export const Searchbox = () => {
+  const auth = useSelector( state => state.auth );
+  const dispatch = useDispatch();
 
-    const { auth, logout } = useContext(AuthContext);
     
   return (
     <div className="headind_srch">
@@ -14,7 +16,7 @@ export const Searchbox = () => {
             <div className="stylish-input-group">
                 <button 
                     className="btn text-danger"
-                    onClick={ logout }
+                    onClick={() => dispatch(logout()) }
                 >
                     Salir
                 </button>

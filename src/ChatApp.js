@@ -1,8 +1,11 @@
 import React from 'react';
 import { AppRouter } from './router/AppRouter';
-import { AuthProvider } from './auth/AuthContext';
+
+import store from './app/store';
+import { Provider } from 'react-redux';
+
 import { SocketProvider } from './context/SocketContext';
-import { ChatProvider } from './context/chat/ChatContext';
+
 import moment from 'moment';
 
 import 'moment/locale/es';
@@ -12,12 +15,10 @@ moment.locale('es');
 
 export const ChatApp = () => {
   return ( 
-    <ChatProvider>
-      <AuthProvider>    
+    <Provider store={ store }>        
         <SocketProvider>
             <AppRouter />
-        </SocketProvider>  
-      </AuthProvider>
-    </ChatProvider>
+        </SocketProvider>    
+    </Provider>
   )
 }

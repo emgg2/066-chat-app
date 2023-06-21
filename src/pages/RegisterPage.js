@@ -1,11 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import '../css/login-register.css';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { AuthContext } from '../auth/AuthContext';
+import { register } from '../features/authSlice';
+import { useDispatch } from 'react-redux';
+
+
 
 
 export const RegisterPage = () => {
+
+	const dispatch = useDispatch();
 	
 	const [form, setForm] = useState({
 		name:'',
@@ -13,7 +18,7 @@ export const RegisterPage = () => {
 		password: ''
 	});
 	
-	const { register } = useContext(AuthContext);
+	
 
 	const onChange = ({target}) => {
 		const { name, value } = target;
@@ -26,7 +31,7 @@ export const RegisterPage = () => {
 	const onSubmit = async (ev) => {
 		ev.preventDefault();
 		const { name, email, password } = form;
-		const ok = await register ( name, email, password);
+		const ok = await dispatch(register ( name, email, password));
 		
 		 if ( !ok ) {
 		 	Swal('Error', 'There has been an error on register', 'error');

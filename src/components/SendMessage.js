@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { SocketContext } from '../context/SocketContext';
-import { AuthContext } from '../auth/AuthContext';
-import { ChatContext } from '../context/chat/ChatContext';
 
 
 export const SendMessage = () => {
 
     const [message, setMessage] = useState('');
-    const { socket } = useContext(SocketContext);
-    const { auth } = useContext(AuthContext);
-    const { chatState } = useContext(ChatContext);
+    const auth = useSelector( state => state.auth );
+    const chatState = useSelector( state => state.chat);
+    const { socket } = useContext ( SocketContext);
+
 
 
     

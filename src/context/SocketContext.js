@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { createContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadedUsersChat, newMessageChat } from '../features/chatSlice';
 
-import { AuthContext } from '../auth/AuthContext';
-import { ChatContext } from './chat/ChatContext';
+
 import { useSocket } from '../hooks/useSocket'
 
-import { types } from '../types/types';
 import { scrollToBottomAnimated } from '../helpers/scrolltoBottom';
 
 
@@ -14,10 +14,11 @@ export const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
     const { socket, online, connectSocket, disconnectSocket } = useSocket('http://localhost:8080');
-    const { auth } = useContext (AuthContext);
-    const { dispatch } = useContext(ChatContext);
-    useEffect(() => {
-     
+    const auth = useSelector( state => state.auth);
+    
+    const dispatch = useDispatch();
+    
+    useEffect(() => {     
         if( auth.logged ) {
             connectSocket();
         }
@@ -34,20 +35,16 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         socket?.on('users-list', (users) => {
-            dispatch({
-                type: types.LoadedUsers,
-                payload: users
-            })
+            dispatch(loadedUsersChat ( users ));
         })
     
     }, [socket, dispatch])
 
     useEffect(() => {
         socket?.on('personal-message', (message) => {
-            dispatch({
-                type: types.NewMessage,
-                payload: message
-            })
+
+            dispatch(newMessageChat ( message ));
+
             setTimeout(() => {
                 scrollToBottomAnimated('mensajes');
             }, 0)
