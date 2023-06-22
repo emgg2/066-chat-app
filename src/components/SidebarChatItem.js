@@ -16,6 +16,7 @@ export const SidebarChatItem = ({ user }) => {
 
         dispatch(activateChat(user.uid));            
         const resp = await fetchWithToken(`messages/${ user.uid }`);  
+        
 
         dispatch(loadMessagesChat(resp.messages));
         setTimeout(() => {

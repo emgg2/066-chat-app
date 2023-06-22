@@ -22,6 +22,7 @@ export const SendMessage = () => {
         ev.preventDefault();
         if( message.length === 0 ) { return }
         setMessage('');
+        console.log("socket send message", socket)
 
         socket.emit('personal-message', {
             from: auth.uid ,

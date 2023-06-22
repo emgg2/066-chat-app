@@ -17,10 +17,11 @@ export const Messages = () => {
         className="msg_history"
       >
         {
-            chatState.messages.map( msg => (           
+            chatState.messages.map( msg => (   
+                
                 ( auth.uid === msg.to)
-                     ? <IncomingMessage key={ msg._id } msg={ msg } />
-                     : <OutgoingMessage key={ msg._id } msg={ msg } />
+                     ? <IncomingMessage key={ msg.uid } msg={ msg } />
+                     : <OutgoingMessage key={ msg.uid } msg={ msg }  />
 
             ))
         }

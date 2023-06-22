@@ -1,22 +1,19 @@
-import React  from 'react'
+import React, { useContext }  from 'react'
 import { hourMonth } from '../helpers/hourMonth'
 import { BiChevronsDown } from "react-icons/bi"
 import { ContextMenu } from './styles/styles'
 import useContextMenu from '../hooks/useContextMenu'
+import { SocketContext } from '../context/SocketContext'
 
-export const OutgoingMessage = ({key, msg} ) => {
+export const OutgoingMessage = ({msg} ) => {
   const { clicked, setClicked, points, setPoints } = useContextMenu();
-  console.log(key);
-  
-  const removeMessage = ({target}) => {
-    console.log('Remove message', target._id)
-  } 
-
-  const removeAllMessages = () => {
-    console.log("remove all messages")
+  const { socket } = useContext ( SocketContext);
+  const eraseMessage = ({target}) => {
+    socket.emit('remove-message', target.id);
   }
-
-
+  const eraseChat = () => {
+    socket.emit('remove-chat');
+  }
 
   return (
      <div 
@@ -45,15 +42,15 @@ export const OutgoingMessage = ({key, msg} ) => {
             <ContextMenu top={points.y} left={ points.x }>
               <ul>
                 <li
-                  onClick={removeMessage}
-                  id={msg.id}
+                  onClick={eraseMessage}
+                  id={msg.uid}
                 
                   
                 >
                   Remove
                 </li> 
                 <li
-                  onClick={removeAllMessages}
+                  onClick={eraseChat}
                 >
                   Remove all messages
                 </li>               

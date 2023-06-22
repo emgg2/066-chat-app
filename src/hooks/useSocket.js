@@ -21,16 +21,17 @@ export const useSocket = ( serverPath ) => {
 
         } );        
         
-        setSocket( socketTemp );       
+        setSocket( socketTemp );    
 
     }, [serverPath])
 
     const disconnectSocket = useCallback(()=>{
+        console.log("desconectando", socket);
+
 
        socket?.disconnect();
 
     }, [ socket ])
-
 
 
     useEffect(() => {
