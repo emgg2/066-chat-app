@@ -34,7 +34,7 @@ export const RegisterPage = () => {
 		const ok = await dispatch(register ( name, email, password));
 		
 		 if ( !ok ) {
-		 	Swal('Error', 'There has been an error on register', 'error');
+			Swal.fire('Error', 'There has been an error on register', 'error');
 		 }
 	}
 
